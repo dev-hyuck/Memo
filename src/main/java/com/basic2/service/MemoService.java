@@ -47,6 +47,19 @@ public class MemoService {
         return dtos;
     }
 
+    @Transactional(readOnly = true)
+    public MemoGetResponse findOne(Long memoId) {
+        Memo memo = MemoRepository.findById(memoId).orElseThrow(
+                () -> new IllegalStateException("존재하지 않는 메모입니다.")
+        );
+        return new MemoGetResponse(
+                memo.getId(),
+                memo.getText(),
+                memo.getCreatedAt(),
+                memo.getModifiedAt()
+        );
+    }
+
 
 
 
