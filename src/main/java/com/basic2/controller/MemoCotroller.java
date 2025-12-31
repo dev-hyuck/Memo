@@ -3,6 +3,7 @@ package com.basic2.controller;
 import com.basic2.dto.MemoCreateResponse;
 import com.basic2.dto.MemoGetResponse;
 import com.basic2.dto.MemoUpdateRequest;
+import com.basic2.dto.MemoUpdateResponse;
 import com.basic2.entity.Memo;
 import com.basic2.service.MemoService;
 import lombok.RequiredArgsConstructor;
@@ -35,20 +36,25 @@ public class MemoCotroller {
 
     @GetMapping("/memos/{memoId}")
     public ResponseEntity<MemoGetResponse> getOne(
+            @PathVariable Long memoId
+    ) {
+        return ResponseEntity.status(HttpStatus.OK).body(memoService.findOne(memoId));
+    }
+
+    @PutMapping("/memos/{memoId}")
+    public ResponseEntity<MemoUpdateResponse> update(
             @PathVariable Long memoId,
             @RequestBody MemoUpdateRequest request
     ) {
         return ResponseEntity.status(HttpStatus.OK).body(memoService.update(memoId, request));
     }
 
-    @GetMapping("/memos/{memoId}")
-    public ResponseEntity<MemoGetResponse> getOne(
+    @DeleteMapping("/memos/{memoId}")
+    public void delete(
             @PathVariable Long memoId
     ) {
-        return ResponseEntity.status(HttpStatus.OK).body(memoService.findOne(memoId));
+        memoService.delete(memoId);
     }
-
-
 
 
 }

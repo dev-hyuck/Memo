@@ -3,6 +3,7 @@ package com.basic2.service;
 import com.basic2.dto.MemoCreateResponse;
 import com.basic2.dto.MemoGetResponse;
 import com.basic2.dto.MemoUpdateRequest;
+import com.basic2.dto.MemoUpdateResponse;
 import com.basic2.entity.Memo;
 import com.basic2.repository.MemoRepository;
 import lombok.RequiredArgsConstructor;
@@ -63,12 +64,12 @@ public class MemoService {
     }
 
     @Transactional
-    public MemoGetResponse update(Long memoId, MemoUpdateRequest request) {
+    public MemoUpdateResponse update(Long memoId, MemoUpdateRequest request) {
         Memo memo = memoRepository.findById(memoId).orElseThrow(
                 () -> new IllegalStateException("존재하지 않는 메모입니다.")
         );
         memo.update(request.getText());
-        return new MemoGetResponse(
+        return new MemoUpdateResponse(
                 memo.getId(),
                 memo.getText(),
                 memo.getCreatedAt(),
